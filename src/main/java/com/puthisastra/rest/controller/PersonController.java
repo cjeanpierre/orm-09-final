@@ -3,6 +3,8 @@ package com.puthisastra.rest.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +42,12 @@ public class PersonController {
 	}
 	
 	@PostMapping
-	public ResponseEntity<Person> create(@RequestBody Person person) {
+	public ResponseEntity<Person> create(@Valid @RequestBody Person person) {
 		return new ResponseEntity<>(personRepository.save(person), HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Person> update(@PathVariable(value = "id") Long personId, @RequestBody Person person) {
+	public ResponseEntity<Person> update(@PathVariable(value = "id") Long personId, @Valid @RequestBody Person person) {
 		Person personInDb = personRepository.getOne(personId);
 		personInDb.setFirstname(person.getFirstname());
 		personInDb.setLastname(person.getLastname());
